@@ -1,8 +1,8 @@
 const express = require("express");
-const todoRouter = require("./api/todo.routes");
+const todoRouter = require("../routes/todo.routes");
 const mongoose = require("mongoose");
 const cors = require("cors");
-const appConfig = require("./config/appConfig");
+const appConfig = require("../config/appConfig");
 const app = express();
 
 //middleware
