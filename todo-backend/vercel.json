@@ -1,6 +1,3 @@
 {
-  "version": 2,
-  "name": "Todo-MERN-backend",
-  "builds": [{ "src": "*.js", "use": "@vercel/node" }],
-  "routes": [{ "src": "/(.*)", "dest": "/" }]
+  "rewrites": [{ "source": "/(.*)", "destination": "/api" }]
 }

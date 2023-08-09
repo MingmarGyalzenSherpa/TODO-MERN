@@ -1,8 +1,8 @@
 const express = require("express");
-const todoRouter = require("../routes/todo.routes");
+const todoRouter = require("./routes/todo.routes");
 const mongoose = require("mongoose");
 const cors = require("cors");
-const appConfig = require("../config/appConfig");
+const appConfig = require("./config/appConfig");
 const app = express();
 
 //middleware
@@ -29,3 +29,5 @@ connect()
   .catch((error) => {
     console.log("Connection failed");
   });
+
+export default app;
