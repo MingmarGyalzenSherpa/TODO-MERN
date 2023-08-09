@@ -2,42 +2,40 @@ import { useState } from "react";
 import AddTodo from "./AddTodo";
 import Todo from "./Todo";
 import { useEffect } from "react";
+import TodoHeader from "./TodoHeader";
+import axios from "axios";
+import appConfig from "../../config/appConfig";
 
 export default function TodoContainer() {
-  const [tasks, setTasks] = useState([]);
-  console.log(...tasks);
-  const submitNewTodo = (newTask) => {
-    console.log("new task" + newTask);
-    setTasks((task) => [...task, newTask]);
-  };
-
-  const handleEdit = () => {
-    console.log("edit");
+  const [todos, setTodos] = useState([]);
+  const submitNewTodo = (newTodo) => {
+    console.log("new task" + newTodo);
+    setTodos((todo) => [...todo, newTodo]);
   };
 
   const handleDelete = () => {
     console.log("delete");
   };
-  const data = [
-    { id: 1, task: "12" },
-    { id: 2, task: "2323" },
-  ];
+
+  const fetchTasks = async () => {
+    const response = await axios.get(appConfig.base_url + "todo/");
+    setTodos(response.data);
+  };
+  console.log(todos);
 
   useEffect(() => {
-    setTasks(data);
+    fetchTasks();
   }, []);
   return (
-    <div className="todo-container">
-      {tasks.map(({ id, task }) => (
-        <Todo
-          key={id}
-          task={task}
-          handleEdit={handleEdit}
-          handleDelete={handleDelete}
-        />
-      ))}
-      <AddTodo handleSubmit={submitNewTodo} />
-      {/* {newTodo && <AddTodo handleClick={handleNewTodo} />} */}
-    </div>
+    <>
+      <TodoHeader />
+      <div className="todo-container">
+        {todos.map((todo) => (
+          <Todo key={todo._id} todo={todo} handleDelete={handleDelete} />
+        ))}
+        <AddTodo handleSubmit={submitNewTodo} />
+        {/* {newTodo && <AddTodo handleClick={handleNewTodo} />} */}
+      </div>
+    </>
   );
 }

@@ -1,11 +1,13 @@
 const express = require("express");
 const todoRouter = require("./routes/todo.routes");
 const mongoose = require("mongoose");
-
+const cors = require("cors");
 const app = express();
 
 //middleware
 app.use(express.json());
+
+app.use(cors({ origin: "http://localhost:5173" }));
 
 app.use(express.urlencoded({ extended: true }));
 

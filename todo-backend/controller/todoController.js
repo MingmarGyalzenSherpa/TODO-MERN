@@ -11,12 +11,11 @@ exports.addTodo = async (req, res) => {
   }
 };
 
-
 //Read
 exports.readTodo = async (req, res) => {
   try {
     const todos = await Todo.find({});
-    res.status(200).json({ data: todos });
+    res.status(200).json(todos);
   } catch (error) {
     res.status(400).json({ message: "Error getting todos" });
   }
