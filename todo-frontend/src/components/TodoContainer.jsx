@@ -9,7 +9,6 @@ import appConfig from "../../config/appConfig";
 export default function TodoContainer() {
   const [todos, setTodos] = useState([]);
   const submitNewTodo = (newTodo) => {
-    console.log("new task" + newTodo);
     setTodos((todo) => [...todo, newTodo]);
   };
 

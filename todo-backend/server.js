@@ -2,12 +2,13 @@ const express = require("express");
 const todoRouter = require("./routes/todo.routes");
 const mongoose = require("mongoose");
 const cors = require("cors");
+const appConfig = require("./config/appConfig");
 const app = express();
 
 //middleware
 app.use(express.json());
 
-app.use(cors({ origin: "http://localhost:5173" }));
+app.use(cors({ origin: appConfig.CLIENT_URL }));
 
 app.use(express.urlencoded({ extended: true }));
 
@@ -15,13 +16,13 @@ app.use("/todo", todoRouter);
 
 //connecting to db thru mongoose
 const connect = async () => {
-  await mongoose.connect("mongodb://127.0.0.1:27017/mingmar-todos");
+  await mongoose.connect(appConfig.DB_URL);
   console.log("Connected Successfully!!");
 };
 
 connect()
   .then(() => {
-    app.listen(8000, (req, res) => {
+    app.listen(appConfig.PORT, (req, res) => {
       console.log("Server has started!!");
     });
   })
