@@ -1,16 +1,16 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import axios from "axios";
 import appConfig from "../../config/appConfig";
 export default function AddTodo({ handleSubmit }) {
+  const [todo, setTodo] = useState("");
+  const inputRef = useRef(null);
   const fieldClicked = () => {
     setActive(true);
+    inputRef.current.focus();
   };
 
-  const [todo, setTodo] = useState("");
-  console.log("todo = " + todo);
   const handleChange = (e) => {
     setTodo(e.target.value);
-    console.log(todo);
   };
 
   const submit = async (e) => {
@@ -18,9 +18,7 @@ export default function AddTodo({ handleSubmit }) {
     const response = await axios.post(appConfig.base_url + "todo/add_todo", {
       task: todo,
     });
-    console.log(response);
-    handleSubmit({ id: 20, task: todo });
-
+    handleSubmit(response.data?.todo || {});
     setTodo("");
     setActive(false);
   };
@@ -34,10 +32,10 @@ export default function AddTodo({ handleSubmit }) {
       >
         <input
           type="text"
+          ref={inputRef}
           onChange={handleChange}
           value={todo}
           placeholder={active ? "" : "+ New Task"}
-          // onSubmit={submit}
         />
       </form>
     </div>

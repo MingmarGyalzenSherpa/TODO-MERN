@@ -13,15 +13,18 @@ export default function TodoContainer() {
     setTodos((todo) => [...todo, newTodo]);
   };
 
-  const handleDelete = () => {
-    console.log("delete");
+  const handleDelete = (id) => {
+    const index = todos.findIndex((todo) => todo._id === id);
+    const tempTodos = todos;
+    tempTodos.splice(index, 1);
+
+    setTodos([...tempTodos]);
   };
 
   const fetchTasks = async () => {
     const response = await axios.get(appConfig.base_url + "todo/");
-    setTodos(response.data);
+    setTodos(response?.data || []);
   };
-  console.log(todos);
 
   useEffect(() => {
     fetchTasks();

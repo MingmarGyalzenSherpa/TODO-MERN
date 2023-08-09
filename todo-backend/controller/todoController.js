@@ -5,7 +5,7 @@ exports.addTodo = async (req, res) => {
   const { task, completed } = req.body;
   try {
     const todo = await Todo.create({ task, completed }); //create and save
-    res.status(200).json({ message: "Task Successfully Added", data: todo });
+    res.status(200).json({ message: "Task Successfully Added", todo });
   } catch (error) {
     res.status(400).json({ message: "Couldn't add task" });
   }

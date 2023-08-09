@@ -16,7 +16,18 @@ export default function Todo({ todo, handleDelete }) {
     );
     inputRef.current.disabled = true;
     inputRef.current.blur();
-    console.log(response);
+  };
+
+  const onDelete = async () => {
+    try {
+      const response = await axios.get(
+        appConfig.base_url + "todo/delete_todo/" + todo._id
+      );
+      if (response.status !== 200) throw new Error("Couldn't delete todo");
+      handleDelete(todo._id);
+    } catch (error) {
+      console.log(error.message);
+    }
   };
 
   const onEdit = () => {
@@ -44,7 +55,7 @@ export default function Todo({ todo, handleDelete }) {
         <button className="btn" onClick={onEdit}>
           <img src={editIcon} alt="" />
         </button>
-        <button className="btn">
+        <button className="btn" onClick={onDelete}>
           <img src={deleteIcon} alt="" />
         </button>
       </div>

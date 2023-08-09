@@ -48,10 +48,15 @@ body {
   border-radius: 0.7rem;
 }
 
+.todo form {
+  width: 90%;
+  /* background-color: red; */
+}
+
 .todo input {
   background-color: rgb(57, 55, 55);
-
-  width: 60%;
+  word-wrap: break-word;
+  width: 100%;
   color: white;
   border: none;
 }
