@@ -26,9 +26,8 @@ const connect = async () => {
 
 connect()
   .then(() => {
-    app.listen(appConfig.PORT, (req, res) => {
+    app.listen(appConfig.PORT, () => {
       console.log("Server has started!!");
-      res.json({ message: "Server" });
     });
   })
   .catch((error) => {
