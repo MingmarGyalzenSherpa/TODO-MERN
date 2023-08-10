@@ -28,7 +28,7 @@ connect()
   .then(() => {
     app.listen(appConfig.PORT, (req, res) => {
       console.log("Server has started!!");
-      res.status(200).json({ message: "Server" });
+      res.json({ message: "Server" });
     });
   })
   .catch((error) => {
