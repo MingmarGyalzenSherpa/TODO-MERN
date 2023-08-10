@@ -14,6 +14,10 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use("/todo", todoRouter);
 
+app.use("/", (req, res) => {
+  res.json({ message: "Hello from todo-mern backend" });
+});
+
 //connecting to db thru mongoose
 const connect = async () => {
   await mongoose.connect(appConfig.DB_URL);
