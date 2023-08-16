@@ -1,3 +1,5 @@
+import authRouter from "./routes/auth.routes";
+
 const express = require("express");
 const todoRouter = require("./routes/todo.routes");
 const mongoose = require("mongoose");
@@ -13,6 +15,8 @@ app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 
 app.use("/todo", todoRouter);
+
+app.use("/auth/", authRouter);
 
 app.use("/", (req, res) => {
   res.json({ message: "Hello from todo-mern backend" });
