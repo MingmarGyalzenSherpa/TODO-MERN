@@ -1,7 +1,6 @@
-import authRouter from "./routes/auth.routes";
-
 const express = require("express");
 const todoRouter = require("./routes/todo.routes");
+const authRouter = require("./routes/auth.routes");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const appConfig = require("./config/appConfig");
@@ -16,7 +15,7 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use("/todo", todoRouter);
 
-app.use("/auth/", authRouter);
+app.use("/auth", authRouter);
 
 app.use("/", (req, res) => {
   res.json({ message: "Hello from todo-mern backend" });
@@ -38,4 +37,4 @@ connect()
     console.log("Connection failed");
   });
 
-export default app;
+module.exports = app;
