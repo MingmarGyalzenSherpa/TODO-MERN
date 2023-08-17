@@ -169,6 +169,10 @@ body {
   color: red;
 }
 
+.signup-container p {
+  margin-left: 80px;
+}
+
 .login-container {
   /* background-color: red; */
 
@@ -214,4 +218,8 @@ body {
 .login-container .error {
   font-size: 1.5rem;
   color: red;
+}
+
+.login-container p {
+  text-align: center;
 }

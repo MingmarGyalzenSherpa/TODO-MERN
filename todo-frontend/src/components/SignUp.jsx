@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import { useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 export default function SignUp() {
   const [name, setName] = useState("");
@@ -6,6 +8,7 @@ export default function SignUp() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
+  const navigate = useNavigate();
 
   const handleClick = function (type, e) {
     switch (type) {
@@ -33,12 +36,34 @@ export default function SignUp() {
     }
   };
 
-  const handleSubmit = () => {};
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!name || !email || !password || !confirmPassword) {
+      setError("Field can't be empty");
+      return;
+    }
+
+    if (confirmPassword !== password) {
+      setError("Password doesn't match");
+      return;
+    }
+    try {
+      const res = await axios.post("http://localhost:8000/auth/signup", {
+        user_name: name,
+        email: email,
+        password: password,
+      });
+      navigate("/login");
+    } catch (error) {
+      console.log(error.response.data);
+      setError(error.response.data?.message);
+    }
+  };
 
   return (
     <div className="signup-container">
       <h1>Sign Up</h1>
-      <form action="">
+      <form onSubmit={handleSubmit}>
         <div className="input-form">
           <label htmlFor="user_name">User Name</label>
           <input

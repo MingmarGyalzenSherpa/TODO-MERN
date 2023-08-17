@@ -33,6 +33,10 @@ exports.login = async function (req, res) {
     const user = await User.findOne({ email: email });
     console.log(user);
     if (!user) throw new Error("User not found!");
+
+    const passwordMatches = await bcrypt.compare(password, user.password);
+    if (!passwordMatches) throw new Error("Incorrect Password");
+
     const payload = {
       user: user._id,
       user_name: user.user_name,
@@ -41,6 +45,7 @@ exports.login = async function (req, res) {
       expiresIn: 60,
     });
     res.cookie("jwt", token, {
+      maxAge: 10000,
       httpOnly: true,
     });
     res.status(200).json({ message: "User found" });
@@ -49,9 +54,7 @@ exports.login = async function (req, res) {
   }
 };
 
-exports.logout = async (req, res) => {
-    
-};
+exports.logout = async (req, res) => {};
 
-// check if user is logged in 
+// check if user is logged in
 //delete token from cookie

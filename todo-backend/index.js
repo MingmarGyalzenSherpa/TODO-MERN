@@ -9,7 +9,7 @@ const app = express();
 //middleware
 app.use(express.json());
 
-app.use(cors());
+app.use(cors({ credentials: true, origin: true }));
 
 app.use(express.urlencoded({ extended: true }));
 
