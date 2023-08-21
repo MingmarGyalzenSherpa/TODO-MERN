@@ -2,10 +2,11 @@ import { useEffect } from "react";
 import { useNavigate, useLoaderData, Navigate } from "react-router-dom";
 import Cookie from "js-cookie";
 import axios from "axios";
+import appConfig from "../../config/appConfig";
 
 export async function loader() {
   try {
-    const res = await axios.get("http://localhost:8000/auth/verify_user");
+    const res = await axios.get(`${appConfig.base_url}verify_user`);
     return res.status;
   } catch (error) {
     return error.response.status;
