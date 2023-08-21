@@ -59,11 +59,14 @@ exports.logout = async (req, res) => {};
 //verify user
 exports.verifyUser = async (req, res) => {
   try {
-    const jwt_token = req.cookies.jwt;
+    const jwt_token = req.cookies?.jwt;
+
+    if (!jwt_token) {
+      throw new Error("unauthorized");
+    }
     const verified = jwt.verify(jwt_token, appConfig.JWT_SECRET_KEY);
     res.status(200).json({ message: "User verified" });
   } catch (error) {
-    console.log(error);
     res.status(400).json({ error });
   }
 };
