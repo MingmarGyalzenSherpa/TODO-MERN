@@ -6,11 +6,19 @@ import TodoContainer from "./components/TodoContainer.jsx";
 import SignUp from "./components/SignUp.jsx";
 import "./assets/css/app.css";
 import Login from "./components/Login.jsx";
+import ProtectedRoute, {
+  loader as ProtectedRouteLoader,
+} from "./utils/ProtectedRoute.jsx";
 
 const router = createBrowserRouter([
   {
-    path: "/todo",
-    element: <App />,
+    path: "/",
+    element: (
+      <ProtectedRoute>
+        <App />
+      </ProtectedRoute>
+    ),
+    loader: ProtectedRouteLoader,
   },
   {
     path: "/signup",

@@ -22,9 +22,8 @@ export default function TodoContainer() {
 
   const fetchTasks = async () => {
     const response = await axios.get(appConfig.base_url + "todo/");
-    setTodos(response?.data || []);
+    setTodos(response.data?.todos || []);
   };
-
   useEffect(() => {
     fetchTasks();
   }, []);

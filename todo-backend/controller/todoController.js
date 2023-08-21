@@ -1,36 +1,37 @@
-const Todo = require("../model/Todo");
+const User = require("../model/User");
+const jwt = require("jsonwebtoken");
+const appConfig = require("../config/appConfig");
 
-//Create
+//create
 exports.addTodo = async (req, res) => {
-  const { task, completed } = req.body;
-  try {
-    const todo = await Todo.create({ task, completed }); //create and save
-    res.status(200).json({ message: "Task Successfully Added", todo });
-  } catch (error) {
-    res.status(400).json({ message: "Couldn't add task" });
-  }
+  const { user_id, task } = req.body;
+  const user = await User.findById(user_id); //finding user
+  const length = user.todos.push({ task }); //it returns the length of todos array
+  await user.save();
+  const todo = user.todos[length - 1]; //getting the latest todo
+  res.status(200).json({ message: "Successfully added", todo });
 };
 
-//Read
+//read
 exports.readTodo = async (req, res) => {
   try {
-    const todos = await Todo.find({});
-    res.status(200).json(todos);
+    const { user_id } = req.body;
+    const user = await User.findById(user_id);
+    res.status(200).json({ todos: user.todos });
   } catch (error) {
     res.status(400).json({ message: "Error getting todos" });
   }
 };
 
-//Update
+//edit
 exports.editTodo = async (req, res) => {
-  const id = req.params.id;
-  const { task, completed = false } = req.body;
+  const todo_id = req.params.id;
+  const { user_id, task } = req.body;
   try {
-    const todo = await Todo.findByIdAndUpdate(
-      id,
-      { task, completed },
-      { returnDocument: "after" }
-    );
+    const user = await User.findById(user_id);
+    const todo = user.todos.id(todo_id);
+    todo.task = task;
+    await user.save();
     res.status(200).json({ message: "Successfully updated", data: todo });
   } catch (error) {
     res.status(400).json({ message: error });
@@ -39,11 +40,13 @@ exports.editTodo = async (req, res) => {
 
 //delete
 exports.deleteTodo = async (req, res) => {
+  const { user_id } = req.body;
   const id = req.params.id;
   try {
-    const todo = await Todo.findByIdAndDelete(id);
+    const user = await User.findById(user_id);
+    user.todos.id(id).deleteOne();
     res.status(200).json({ message: "Successfully deleted" });
   } catch (error) {
-    res.status(400).json({ error });
+    res.status(400).json({ message: "Error deleting todo" });
   }
 };

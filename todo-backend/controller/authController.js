@@ -42,11 +42,11 @@ exports.login = async function (req, res) {
       user_name: user.user_name,
     };
     const token = jwt.sign(payload, appConfig.JWT_SECRET_KEY, {
-      expiresIn: 60,
+      expiresIn: "1h",
     });
     res.cookie("jwt", token, {
-      maxAge: 10000,
-      httpOnly: true,
+      maxAge: 1000 * 60 * 60,
+      // httpOnly: true,
     });
     res.status(200).json({ message: "User found" });
   } catch (error) {
@@ -55,6 +55,18 @@ exports.login = async function (req, res) {
 };
 
 exports.logout = async (req, res) => {};
+
+//verify user
+exports.verifyUser = async (req, res) => {
+  try {
+    const jwt_token = req.cookies.jwt;
+    const verified = jwt.verify(jwt_token, appConfig.JWT_SECRET_KEY);
+    res.status(200).json({ message: "User verified" });
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({ error });
+  }
+};
 
 // check if user is logged in
 //delete token from cookie

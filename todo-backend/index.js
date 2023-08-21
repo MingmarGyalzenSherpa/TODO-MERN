@@ -4,6 +4,8 @@ const authRouter = require("./routes/auth.routes");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const appConfig = require("./config/appConfig");
+const cookieParser = require("cookie-parser");
+const authMidddleware = require("./middleware/authMiddleware");
 const app = express();
 
 //middleware
@@ -13,7 +15,9 @@ app.use(cors({ credentials: true, origin: true }));
 
 app.use(express.urlencoded({ extended: true }));
 
-app.use("/todo", todoRouter);
+app.use(cookieParser());
+
+app.use("/todo", authMidddleware, todoRouter);
 
 app.use("/auth", authRouter);
 

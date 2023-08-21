@@ -1,6 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
 
 export default function SignUp() {
   const [name, setName] = useState("");
@@ -8,6 +9,7 @@ export default function SignUp() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
+  const isLoggedIn = Cookies.get("jwt");
   const navigate = useNavigate();
 
   const handleClick = function (type, e) {
@@ -60,7 +62,7 @@ export default function SignUp() {
     }
   };
 
-  return (
+  return !isLoggedIn ? (
     <div className="signup-container">
       <h1>Sign Up</h1>
       <form onSubmit={handleSubmit}>
@@ -107,5 +109,7 @@ export default function SignUp() {
         </div>
       </form>
     </div>
+  ) : (
+    <Navigate to={"/"} />
   );
 }

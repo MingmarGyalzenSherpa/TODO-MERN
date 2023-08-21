@@ -1,12 +1,15 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
 axios.defaults.withCredentials = true;
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const isLoggedIn = Cookies.get("jwt");
   const navigate = useNavigate();
+
   const handleChange = function (type, e) {
     switch (type) {
       case "email":
@@ -31,14 +34,14 @@ export default function Login() {
         password: password,
       });
       console.log(res);
-      // navigate("/todo");
+      navigate("/");
     } catch (error) {
       console.log(error.response.data?.message);
       setError(error.response.data?.message);
     }
   };
 
-  return (
+  return !isLoggedIn ? (
     <div className="login-container">
       <h1>Login</h1>
       <form onSubmit={handleSubmit}>
@@ -66,5 +69,7 @@ export default function Login() {
         </div>
       </form>
     </div>
+  ) : (
+    <Navigate to={"/"}></Navigate>
   );
 }
