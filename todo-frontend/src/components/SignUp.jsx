@@ -2,6 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 import { NavLink, Navigate, useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
+import appConfig from "../../config/appConfig";
 
 export default function SignUp() {
   const [name, setName] = useState("");
@@ -50,7 +51,7 @@ export default function SignUp() {
       return;
     }
     try {
-      const res = await axios.post("http://localhost:8000/auth/signup", {
+      const res = await axios.post(`${appConfig.base_url}auth/signup`, {
         user_name: name,
         email: email,
         password: password,

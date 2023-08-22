@@ -6,10 +6,11 @@ import TodoContainer from "./components/TodoContainer.jsx";
 import SignUp from "./components/SignUp.jsx";
 import "./assets/css/app.css";
 import Login from "./components/Login.jsx";
+import axios from "axios";
 import ProtectedRoute, {
   loader as ProtectedRouteLoader,
 } from "./utils/ProtectedRoute.jsx";
-
+axios.defaults.withCredentials = true;
 const router = createBrowserRouter([
   {
     path: "/",
