@@ -45,6 +45,7 @@ exports.deleteTodo = async (req, res) => {
   try {
     const user = await User.findById(user_id);
     user.todos.id(id).deleteOne();
+    await user.save();
     res.status(200).json({ message: "Successfully deleted" });
   } catch (error) {
     res.status(400).json({ message: "Error deleting todo" });

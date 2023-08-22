@@ -13,6 +13,27 @@ body {
   background-color: rgb(29, 27, 27);
 }
 
+nav {
+  padding: 30px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: white;
+  border-bottom: 1px solid rgba(100, 100, 111, 0.2);
+}
+
+nav button {
+  border: none;
+  padding: 15px 10px;
+  background-color: rgb(240, 57, 57);
+  color: white;
+}
+
+nav button:hover {
+  cursor: pointer;
+  background-color: rgb(177, 9, 9);
+}
+
 .app {
   margin-top: 100px;
   display: flex;
@@ -173,6 +194,10 @@ body {
   margin-left: 80px;
 }
 
+.signup-container .to-login {
+  font-size: 1.5rem;
+}
+
 .login-container {
   /* background-color: red; */
 
@@ -222,4 +247,11 @@ body {
 
 .login-container p {
   text-align: center;
+}
+
+.login-container .to-signup {
+  font-size: 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  width: 80%;
 }

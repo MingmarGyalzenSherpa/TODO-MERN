@@ -1,6 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
-import { Navigate, useNavigate } from "react-router-dom";
+import { NavLink, Navigate, useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 
 export default function SignUp() {
@@ -103,7 +103,9 @@ export default function SignUp() {
           />
         </div>
         {error && <p className="error">{error}</p>}
-
+        <div className="input-form to-login">
+          Already a member? <NavLink to={"/login"}>Login</NavLink>
+        </div>
         <div className="input-form">
           <button className="signup-btn">Submit</button>
         </div>

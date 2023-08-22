@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { Navigate, useNavigate } from "react-router-dom";
+import { NavLink, Navigate, useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 axios.defaults.withCredentials = true;
 export default function Login() {
@@ -67,6 +67,9 @@ export default function Login() {
         <div className="input-form">
           <button className="login-btn">Login</button>
         </div>
+        <p className="to-signup">
+          Not registered? <NavLink to="/signup">Sign up</NavLink>
+        </p>
       </form>
     </div>
   ) : (

@@ -31,7 +31,6 @@ exports.login = async function (req, res) {
   const { email, password } = req.body;
   try {
     const user = await User.findOne({ email: email });
-    console.log(user);
     if (!user) throw new Error("User not found!");
 
     const passwordMatches = await bcrypt.compare(password, user.password);
@@ -65,7 +64,9 @@ exports.verifyUser = async (req, res) => {
       throw new Error("unauthorized");
     }
     const verified = jwt.verify(jwt_token, appConfig.JWT_SECRET_KEY);
-    res.status(200).json({ message: "User verified" });
+    res
+      .status(200)
+      .json({ message: "User verified", user_name: verified.user_name });
   } catch (error) {
     res.status(400).json({ error });
   }
