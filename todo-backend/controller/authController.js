@@ -43,11 +43,14 @@ exports.login = async function (req, res) {
     const token = jwt.sign(payload, appConfig.JWT_SECRET_KEY, {
       expiresIn: "1h",
     });
-    res.cookie("jwt", token, {
-      maxAge: 1000 * 60 * 60,
-      // httpOnly: true,
-    });
-    res.status(200).json({ message: "User found" });
+    // res.cookie("jwt", token, {
+    //   maxAge: 1000 * 60 * 60,
+    //   // httpOnly: true,
+    // });
+    res
+      .status(200)
+      .cookie("jwt", token, { maxAge: 1000 * 60 * 60 })
+      .json({ message: "User found" });
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
