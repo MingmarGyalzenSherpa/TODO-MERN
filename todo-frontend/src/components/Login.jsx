@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { NavLink, Navigate, useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
+import appConfig from "../../config/appConfig";
 axios.defaults.withCredentials = true;
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -29,7 +30,7 @@ export default function Login() {
     e.preventDefault();
     setError("");
     try {
-      const res = await axios.post("http://localhost:8000/auth/login", {
+      const res = await axios.post(`${appConfig.base_url}auth/login`, {
         email: email,
         password: password,
       });
