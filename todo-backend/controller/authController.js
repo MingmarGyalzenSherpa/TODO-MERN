@@ -47,9 +47,8 @@ exports.login = async function (req, res) {
     //   maxAge: 1000 * 60 * 60,
     //   // httpOnly: true,
     // });
-    res
+    res.cookie("jwt", token, { maxAge: 1000 * 60 * 60 })
       .status(200)
-      .cookie("jwt", token, { maxAge: 1000 * 60 * 60 })
       .json({ message: "User found" });
   } catch (error) {
     res.status(400).json({ message: error.message });
